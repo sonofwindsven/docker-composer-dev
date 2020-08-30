@@ -1,0 +1,35 @@
+version: '3'
+services:
+  web:
+    image: 'nginx:latest'
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+    volumes:
+      - ./config:/etc/nginx/conf.d
+      - /Users/changchaofeng/nginx/www:/www
+  php:
+    image: 'php:fpm'
+    volumes:
+      - /Users/changchaofeng/nginx/www:/www
+      - ./config/php.ini:/usr/local/etc/php/php.ini
+  db:
+    image: "mysql:latest"
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=aiziji521
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=12345678
+    ports:
+      - "13306:3306"
+    volumes:
+      - /Users/changchaofeng/nginx/mysql/logs:/logs
+      - /Users/changchaofeng/nginx/mysql/data:/var/lib/mysql
+      - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
+networks:
+  default:
+    external:
+      name: mynet
