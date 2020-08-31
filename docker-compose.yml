@@ -9,11 +9,13 @@ services:
     volumes:
       - ./config:/etc/nginx/conf.d
       - /Users/changchaofeng/nginx/www:/www
+      - /Users/changchaofeng/developer/logs/:/var/log/nginx
   php:
     image: 'php:fpm'
     volumes:
       - /Users/changchaofeng/nginx/www:/www
       - ./config/php.ini:/usr/local/etc/php/php.ini
+      - /Users/changchaofeng/developer/logs/:/var/log/php
   db:
     image: "mysql:latest"
     restart: always
