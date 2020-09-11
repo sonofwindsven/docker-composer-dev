@@ -11,7 +11,7 @@ services:
       - /Users/changchaofeng/nginx/www:/www
       - /Users/changchaofeng/developer/logs/:/var/log/nginx
   php:
-    image: 'php:fpm'
+    image: 'php:dev'
     volumes:
       - /Users/changchaofeng/nginx/www:/www
       - ./config/php.ini:/usr/local/etc/php/php.ini
@@ -31,6 +31,13 @@ services:
       - /Users/changchaofeng/nginx/mysql/logs:/logs
       - /Users/changchaofeng/nginx/mysql/data:/var/lib/mysql
       - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
+  golang:
+    image: "golang:dev"
+    ports: 
+      - "10000:80"
+    tty: true
+    volumes:
+      - /Users/changchaofeng/nginx/www:/go/src/app
 networks:
   default:
     external:
