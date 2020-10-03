@@ -2,6 +2,8 @@ version: '3'
 services:
   web:
     image: 'nginx:latest'
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - "8080:80"
     depends_on:
@@ -12,6 +14,8 @@ services:
       - /Users/changchaofeng/developer/logs/:/var/log/nginx
   php:
     image: 'php:dev'
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - /Users/changchaofeng/nginx/www:/www
       - ./config/php.ini:/usr/local/etc/php/php.ini
@@ -25,6 +29,7 @@ services:
       - MYSQL_DATABASE=test
       - MYSQL_USER=test
       - MYSQL_PASSWORD=12345678
+      - TZ=Asia/Shanghai
     ports:
       - "13306:3306"
     volumes:
@@ -33,6 +38,8 @@ services:
       - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
   golang:
     image: "golang:dev"
+    environment:
+      - TZ=Asia/Shanghai
     ports: 
       - "10000:80"
     tty: true
