@@ -42,9 +42,39 @@ services:
       - TZ=Asia/Shanghai
     ports: 
       - "10000:80"
+      - "8000:8000"
     tty: true
     volumes:
       - /Users/changchaofeng/nginx/www:/go/src/app
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.9.3"
+    environment:
+      - TZ=Asia/Shanghai
+      - cluster.name=dockeres
+      - node.name=elasticsearch_01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /Users/changchaofeng/nginx/elsaticsearch/data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: kibana
+    environment:
+      TZ: Asia/Shanghai
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
 networks:
   default:
     external:
