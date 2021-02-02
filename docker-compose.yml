@@ -43,6 +43,7 @@ services:
     ports: 
       - "10000:80"
       - "8000:8000"
+      - "8001:8001"
     tty: true
     volumes:
       - /Users/changchaofeng/nginx/www:/go/src/app
